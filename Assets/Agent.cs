@@ -3,41 +3,46 @@ using System.Collections;
 
 public class Agent : MonoBehaviour {
 
-    public bool isAlive;
-    public bool nextState;
+	// Properties
+	
+	public bool isAlive;	// Is the agent in the Alive State
+	public bool nextState;	// Which state will this agent change to after next update
+	
+	MeshRenderer planeChild;	// Plane where the visual representation of the agent is shown
+	private Color DEAD_COLOR = Color.black;	// Default Colour of an agent
+	private Color ALIVE_COLOR = Color.cyan;	// Colour of an agent once activated, when isAlive is true
 
-    MeshRenderer planeChild;
-    private Color DEAD_COLOR = Color.black;
-    private Color ALIVE_COLOR = Color.cyan;
 
-	// Use this for initialization
+	// Methods
+
+	// Initialize Agent values
 	void Start () {
-        isAlive = false;
-        nextState = false;
-        planeChild = gameObject.GetComponentInChildren<MeshRenderer>();
-        planeChild.material.color = DEAD_COLOR;
+		// Agent default values
+		isAlive = false;
+		nextState = false;
+		planeChild = gameObject.GetComponentInChildren<MeshRenderer>();
+		planeChild.material.color = DEAD_COLOR;
+	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	   
+	
+	// This method toggles the isAlive status of the agent and updates the visuals for it
+	public void ToggleAlive() {
+	
+		//print("ToggleAlive");
+		isAlive = !isAlive;
+		
+		if (isAlive)
+	    		planeChild.material.color = ALIVE_COLOR;        
+		else
+			planeChild.material.color = DEAD_COLOR;
 	}
-   
-    public void ToggleAlive()
-    {
-        //print("ToggleAlive");
-        isAlive = !isAlive;
-
-        if (isAlive)
-            planeChild.material.color = ALIVE_COLOR;        
-        else
-            planeChild.material.color = DEAD_COLOR;
-    }
-
-    void OnMouseDown()
-    {
-        //print("MouseDown");
-        ToggleAlive();        
-    }
+	
+	// This method is used when you click on an agent
+	void OnMouseDown()
+	{
+		//print("MouseDown");
+		ToggleAlive();        
+	}
 
 }
